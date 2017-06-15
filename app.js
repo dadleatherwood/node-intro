@@ -2,14 +2,27 @@ var express = require('express');
 var bodyParser = require('body-parser')
 var messagesCtrl = require('./controllers')
 var messages = require('./messages')
+var session = require('express-session')
+var cors = require('cors')
 var app = express();
 
 
 
 
 //app.use(function(req,res,next))
+app.use(cors())
+app.use(session({
+  secret: 'devmountain',
+
+}))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+app.use(function(req, res, next){
+  // console.log(req)
+  console.log(req.body)
+  console.log(req.session)
+  next()
+})
 
 //'use' function to be used for specific purposes instead of ALL cases
 var addMessageID = function(req,res,next){
@@ -19,6 +32,8 @@ var addMessageID = function(req,res,next){
   req.body.category = id % 2 == 0 ? 'even' : 'odd'
   next();
 }
+
+
 
 
 //app.get(endpoint, callback)

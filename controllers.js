@@ -2,7 +2,15 @@ var messages = require('./messages')
 
 module.exports = {
   getMessages: function(req,res){
-    res.send(messages)
+    var session = req.session;
+    if(session.views){
+      session.views++
+      res.json(session.views)
+    } else {
+      session.views = 1;
+      res.json(session.views)
+    }
+    // res.send(messages)
   },
   postMessages: function(req,res){
     console.log('this is the post endpoint')
