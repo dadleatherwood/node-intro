@@ -13,16 +13,11 @@ var app = express();
 app.use(cors())
 app.use(session({
   secret: 'devmountain',
-
 }))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
-app.use(function(req, res, next){
-  // console.log(req)
-  console.log(req.body)
-  console.log(req.session)
-  next()
-})
+//makes static things available
+app.use(express.static('public'))
 
 //'use' function to be used for specific purposes instead of ALL cases
 var addMessageID = function(req,res,next){
